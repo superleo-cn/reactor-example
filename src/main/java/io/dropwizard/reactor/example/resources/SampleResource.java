@@ -26,7 +26,7 @@ public class SampleResource {
                 .map(x -> Response.ok().build())
                 .subscribeOn(scheduler)
                 .block();
-    }
+    }   
 
     @GET
     @Path("/nonblocking")
