@@ -1,4 +1,9 @@
+server:
+  maxThreads: 8
+  requestLog:
+    appenders: []
+
 logging:
-  level: INFO
+  level: ERROR
   loggers:
-    io.dropwizard.reactor-example: DEBUG
+    io.dropwizard.reactor-example: ERROR

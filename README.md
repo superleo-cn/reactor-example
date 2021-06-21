@@ -11,3 +11,19 @@ Health Check
 ---
 
 To see your applications health enter url `http://localhost:8081/healthcheck`
+
+Non-blocking benchmarking
+---
+Reduced the server maxThreads to 8 threads (Default: 1024) in ```config.yml```. Requires [Apache HTTP server benchmarking tool](https://httpd.apache.org/docs/2.4/programs/ab.html)
+
+### Blocking benchmark
+
+```
+ab -n 10000 -c 70 localhost:8080/sample/blocking
+```
+
+### Non-blocking benchmark
+
+```
+ab -n 10000 -c 70 localhost:8080/sample/nonblocking
+```

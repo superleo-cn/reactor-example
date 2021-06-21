@@ -1,8 +1,11 @@
 package io.dropwizard.reactor.example;
 
 import io.dropwizard.Application;
+import io.dropwizard.reactor.example.resources.SampleResource;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import reactor.core.scheduler.Scheduler;
+import reactor.core.scheduler.Schedulers;
 
 public class ReactorExampleApplication extends Application<ReactorExampleConfiguration> {
 
@@ -23,7 +26,8 @@ public class ReactorExampleApplication extends Application<ReactorExampleConfigu
     @Override
     public void run(final ReactorExampleConfiguration configuration,
                     final Environment environment) {
-        // TODO: implement application
+        Scheduler scheduler = Schedulers.newBoundedElastic(50, 1000, "sample");
+        environment.jersey().register(new SampleResource(scheduler));
     }
 
 }
