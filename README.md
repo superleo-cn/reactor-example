@@ -27,3 +27,12 @@ ab -n 10000 -c 70 localhost:8080/sample/blocking
 ```
 ab -n 10000 -c 70 localhost:8080/sample/nonblocking
 ```
+
+Reactive Example
+---
+
+Once the server is up and running, you can make the following request to fetch the recommended users.
+The console logs should show what scheduler the code runs on.
+```
+curl "localhost:8080/recommended_users/3?limit=10"
+```
