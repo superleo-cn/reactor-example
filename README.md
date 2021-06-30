@@ -36,3 +36,28 @@ The console logs should show what scheduler the code runs on.
 ```
 curl "localhost:8080/recommended_users/3?limit=10"
 ```
+
+Distributed Tracing
+---
+
+Currently not using the Context API. Leveraging the onScheduleHook to pass trace information. And manually tracing sections. Each span
+has the tags which includes threads which started and finished the operation
+
+1. Bring up Zipkin locally
+
+```
+curl -sSL https://zipkin.io/quickstart.sh | bash -s
+java -jar zipkin.jar
+```
+
+2. Bring up dropwizard application
+
+```
+java -jar target/reactor-example-1.0-SNAPSHOT.jar server config.yml
+```
+
+3. Send sample request and search for trace at http://127.0.0.1:9411/
+
+```
+curl "localhost:8080/recommended_users/3?limit=10"
+```

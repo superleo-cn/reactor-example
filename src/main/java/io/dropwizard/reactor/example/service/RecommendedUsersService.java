@@ -28,9 +28,10 @@ public class RecommendedUsersService {
         //Caching Flux so items can be replayed in future subscriptions. This is to avoid re-fetching data
         Flux<UserTopicStats> userTopicStatsFlux = getUsersFlux(userId, limit).cache();
         //Cache each user
-        userTopicStatsFlux.subscribe(u -> cacheRecommendedUser(u));
+        //userTopicStatsFlux.subscribe(u -> cacheRecommendedUser(u));
         //Convert to Mono
-        return userTopicStatsFlux.collectList();
+        Mono<List<UserTopicStats>> userTopicStatsList =  userTopicStatsFlux.collectList();
+        return TracingUtil.trace(userTopicStatsList, "recommended-users");
     }
 
     private Flux<UserTopicStats> getUsersFlux(long userId, int limit) {

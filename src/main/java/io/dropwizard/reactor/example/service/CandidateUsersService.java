@@ -27,22 +27,25 @@ public class CandidateUsersService {
         Flux.mergeSequential(getTopUsers(userId), getInfluencers(userId));
 
         //Subscribe sequentially
-        return Flux.concat(getTopUsers(userId), getInfluencers(userId))
+        Flux<Long> candidateUsers =  Flux.concat(getTopUsers(userId), getInfluencers(userId))
                 .take(limit);
+        return TracingUtil.trace(candidateUsers, "candidate-users");
     }
 
     public Flux<Long> getTopUsers(long userId) {
-        return Mono.fromCallable(() -> {
+        return TracingUtil.trace(Mono.fromCallable(() -> {
             LOGGER.info("Fetching list of top users");
+            Thread.sleep(100);
             return LongStream.range(0,5).boxed().collect(Collectors.toList());
-        }).subscribeOn(scheduler).flatMapIterable(x -> x);
+        }).subscribeOn(scheduler).flatMapIterable(x -> x), "top-users");
     }
 
     public Flux<Long> getInfluencers(long userId) {
-        return Mono.fromCallable(() -> {
+        return TracingUtil.trace(Mono.fromCallable(() -> {
             LOGGER.info("Fetching list of influencers");
+            Thread.sleep(50);
             return LongStream.range(10,1000).boxed().collect(Collectors.toList());
-        }).subscribeOn(scheduler).flatMapIterable(x -> x);
+        }).subscribeOn(scheduler).flatMapIterable(x -> x), "influencers");
     }
 }
 

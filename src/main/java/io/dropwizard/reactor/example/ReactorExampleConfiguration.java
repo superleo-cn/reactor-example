@@ -1,10 +1,30 @@
 package io.dropwizard.reactor.example;
 
+import com.smoketurner.dropwizard.zipkin.ConsoleZipkinFactory;
+import com.smoketurner.dropwizard.zipkin.ZipkinFactory;
+import com.smoketurner.dropwizard.zipkin.client.ZipkinClientConfiguration;
+
 import io.dropwizard.Configuration;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.hibernate.validator.constraints.*;
-import javax.validation.constraints.*;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 public class ReactorExampleConfiguration extends Configuration {
-    // TODO: implement service configuration
+    @Valid
+    @NotNull
+    public final ZipkinFactory zipkin = new ConsoleZipkinFactory();
+
+    @Valid @NotNull
+    private final ZipkinClientConfiguration zipkinClient = new ZipkinClientConfiguration();
+
+    @JsonProperty
+    public ZipkinFactory getZipkin() {
+        return zipkin;
+    }
+
+    @JsonProperty
+    public ZipkinClientConfiguration getZipkinClient() {
+        return zipkinClient;
+    }
 }
