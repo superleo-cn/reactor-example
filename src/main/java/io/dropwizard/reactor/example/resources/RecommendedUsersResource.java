@@ -2,6 +2,7 @@ package io.dropwizard.reactor.example.resources;
 
 import com.codahale.metrics.Timer;
 import io.dropwizard.reactor.example.service.RecommendedUsersService;
+import org.glassfish.jersey.server.ManagedAsync;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

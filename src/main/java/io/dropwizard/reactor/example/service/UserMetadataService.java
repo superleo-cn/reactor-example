@@ -19,25 +19,28 @@ public class UserMetadataService {
     }
 
     private Mono<User> getUser(long id) {
-        return Mono.fromCallable(() -> {
+        return TracingUtil.trace(Mono.fromCallable(() -> {
             LOGGER.info("Fetching user info");
+            Thread.sleep(100);
             return new User(id, "name" + id);
-        }).subscribeOn(userScheduler);
+        }).subscribeOn(userScheduler), "user-metadata");
     }
 
     private Mono<Topic> getUserTopTopic(long id) {
-        return Mono.fromCallable(() -> {
+        return TracingUtil.trace(Mono.fromCallable(() -> {
             LOGGER.info("Fetching user's top topic info");
+            Thread.sleep(100);
             return new Topic(id, "topic" + id);
-        }).subscribeOn(topicScheduler);
+        }).subscribeOn(topicScheduler), "user-top-topic");
     }
 
     // Fetch user metadata and user's top topic in parallel
     public Mono<UserTopic> getUserMetaData(long id) {
         // Fetch user and user's top topic in parallel
         // and combine them into a UserTopic class
-        return getUser(id)
+        Mono<UserTopic> userTopicMono = getUser(id)
                 .zipWith(getUserTopTopic(id),
                         (user, topic) -> new UserTopic(user, topic));
+        return userTopicMono;
     }
 }
