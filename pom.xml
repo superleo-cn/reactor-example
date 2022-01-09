@@ -14,10 +14,11 @@
     <name>ReactorExample</name>
 
     <properties>
+        <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <dropwizard.version>2.0.22</dropwizard.version>
-        <reactor.version>2020.0.7</reactor.version>
+        <dropwizard.version>2.0.28</dropwizard.version>
+        <reactor.version>2020.0.14</reactor.version>
         <mainClass>io.dropwizard.reactor.example.ReactorExampleApplication</mainClass>
     </properties>
 
@@ -74,7 +75,7 @@
         <dependency>
             <groupId>io.projectreactor</groupId>
             <artifactId>reactor-test</artifactId>
-            <scope>test</scope>
+<!--            <scope>test</scope>-->
         </dependency>
         <dependency>
             <groupId>com.smoketurner.dropwizard</groupId>
@@ -83,6 +84,18 @@
         <dependency>
             <groupId>com.smoketurner.dropwizard</groupId>
             <artifactId>zipkin-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>RELEASE</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>RELEASE</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
